@@ -1,0 +1,37 @@
+spring:
+   application:
+      name: service-provider
+   datasource:
+      url: jdbc:mysql://127.0.0.1:3306/kz?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+      username: root
+      password: Ee84336462!
+      driver-class-name: com.mysql.cj.jdbc.Driver
+   cloud:
+      alibaba:
+         seata:
+            tx-service-group: test_tx_group
+      nacos:
+         discovery:
+            server-addr: 127.0.0.1:8848
+server:
+   port: 8001
+#eureka:
+#   client:
+#      serviceUrl:
+#         defaultZone: http://localhost:8000/eureka/
+#   instance:
+#      instance-id: service-provider-8001
+#      prefer-ip-address: true
+ribbon:
+   eager-load:
+      enabled: true
+      clients: service-provider2
+   eureka:
+      enable: true
+   ConnectTimeout: 5000
+   ReadTimeout: 5000
+feign:
+   httpclient:
+      enable: false
+   okhttp:
+      enable: true
