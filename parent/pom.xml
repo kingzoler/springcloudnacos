@@ -6,7 +6,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.2.5.RELEASE</version>
-		<relativePath/>
+		<relativePath />
 	</parent>
 	<groupId>test</groupId>
 	<artifactId>parent</artifactId>
@@ -14,16 +14,16 @@
 	<packaging>pom</packaging>
 
 	<modules>
-		
+
 	</modules>
-	
+
 	<properties>
 		<java.version>1.8</java.version>
 		<mysql-connector-java.version>8.0.18</mysql-connector-java.version>
 		<mybatis-spring-boot-starter.version>2.0.0</mybatis-spring-boot-starter.version>
 		<druid-spring-boot-starter.version>1.1.10</druid-spring-boot-starter.version>
 		<lombok.version>1.18.8</lombok.version>
-		<seata.version>1.0.0</seata.version>
+		<seata.version>1.3.0</seata.version>
 		<common-codec.version>1.12</common-codec.version>
 		<feign-okhttp.version>10.3.0</feign-okhttp.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -45,41 +45,50 @@
 			<scope>test</scope>
 		</dependency>
 
-		<!--mybatis-->
+		<!--mybatis -->
 		<dependency>
 			<groupId>org.mybatis.spring.boot</groupId>
 			<artifactId>mybatis-spring-boot-starter</artifactId>
 			<version>${mybatis-spring-boot-starter.version}</version>
 		</dependency>
-		<!--mysql-->
+		<!--mysql -->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>${mysql-connector-java.version}</version>
 		</dependency>
-		<!--druid-->
+		<!--druid -->
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>druid-spring-boot-starter</artifactId>
 			<version>${druid-spring-boot-starter.version}</version>
 		</dependency>
-		<!--lombok-->
+		<!--lombok -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<version>${lombok.version}</version>
 		</dependency>
-		<!--seata-->
+		<!--seata -->
 		<dependency>
 			<groupId>com.alibaba.cloud</groupId>
 			<artifactId>spring-cloud-alibaba-seata</artifactId>
-			<version>2.1.0.RELEASE</version>
+			<version>2.2.0.RELEASE</version>
 			<exclusions>
 				<exclusion>
-					<artifactId>seata-all</artifactId>
 					<groupId>io.seata</groupId>
+					<artifactId>seata-spring-boot-starter</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>io.seata</groupId>
+					<artifactId>seata-all</artifactId>
 				</exclusion>
 			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>io.seata</groupId>
+			<artifactId>seata-spring-boot-starter</artifactId>
+			<version>${seata.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>io.seata</groupId>
@@ -87,17 +96,17 @@
 			<version>${seata.version}</version>
 		</dependency>
 		<dependency>
-		    <groupId>commons-codec</groupId>
-		    <artifactId>commons-codec</artifactId>
-		    <version>${common-codec.version}</version>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>${common-codec.version}</version>
 		</dependency>
 		<dependency>
-		    <groupId>io.github.openfeign</groupId>
-		    <artifactId>feign-okhttp</artifactId>
-		    <version>${feign-okhttp.version}</version>
+			<groupId>io.github.openfeign</groupId>
+			<artifactId>feign-okhttp</artifactId>
+			<version>${feign-okhttp.version}</version>
 		</dependency>
 	</dependencies>
-	
+
 	<build>
 		<plugins>
 			<plugin>

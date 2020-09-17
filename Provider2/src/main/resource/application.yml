@@ -7,9 +7,6 @@ spring:
       password: Ee84336462!
       driver-class-name: com.mysql.cj.jdbc.Driver
    cloud:
-      alibaba:
-         seata:
-            tx-service-group: test_tx_group
       nacos:
          discovery:
             server-addr: 127.0.0.1:8848
@@ -31,4 +28,22 @@ feign:
    httpclient:
       enable: false
    okhttp:
+      enable: false
+   sentinel:
       enable: true
+seata:
+   enabled: true
+   application-id: service-provider2
+   tx-service-group: test_tx_group
+   enable-auto-data-source-proxy: true
+   config:
+      type: nacos
+      nacos:
+         serverAddr: 127.0.0.1:8848
+         group: SEATA_GROUP
+   registry:
+      type: nacos
+      nacos:
+         application: seata
+         server-addr: 127.0.0.1:8848
+         group: SEATA_GROUP

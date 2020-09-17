@@ -1,0 +1,11 @@
+spring:
+   application:
+      name: client-feign
+   cloud:
+      nacos:
+         config:
+            server-addr: ${addr:127.0.0.1:8848}
+            file-extension: yaml
+            ext-config[0]:
+               data-id: test.yaml
+            share-dataids: test2.yaml
