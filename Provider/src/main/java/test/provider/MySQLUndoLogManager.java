@@ -1,3 +1,18 @@
+/*
+ *  Copyright 1999-2019 Seata.io Group.
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
 package test.provider;
 
 import java.sql.Blob;
@@ -7,14 +22,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import io.seata.common.loader.LoadLevel;
 import io.seata.common.util.BlobUtils;
 import io.seata.core.constants.ClientTableColumnsName;
 import io.seata.rm.datasource.undo.AbstractUndoLogManager;
 import io.seata.rm.datasource.undo.UndoLogParser;
+import io.seata.sqlparser.util.JdbcConstants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+/**
+ * @author jsbxyyx
+ */
+@LoadLevel(name = JdbcConstants.MYSQL)
 public class MySQLUndoLogManager extends AbstractUndoLogManager {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MySQLUndoLogManager.class);
@@ -34,6 +54,7 @@ public class MySQLUndoLogManager extends AbstractUndoLogManager {
 
     @Override
     public int deleteUndoLogByLogCreated(Date logCreated, int limitRows, Connection conn) throws SQLException {
+    	System.out.println("seata1");
         try (PreparedStatement deletePST = conn.prepareStatement(DELETE_UNDO_LOG_BY_CREATE_SQL)) {
             deletePST.setDate(1, new java.sql.Date(logCreated.getTime()));
             deletePST.setInt(2, limitRows);
@@ -53,11 +74,13 @@ public class MySQLUndoLogManager extends AbstractUndoLogManager {
     @Override
     protected void insertUndoLogWithNormal(String xid, long branchId, String rollbackCtx,
                                            byte[] undoLogContent, Connection conn) throws SQLException {
+    	System.out.println("seata2");
         insertUndoLog(xid, branchId, rollbackCtx, undoLogContent, State.Normal, conn);
     }
 
     @Override
     protected byte[] getRollbackInfo(ResultSet rs) throws SQLException {
+    	System.out.println("seata3");
         Blob b = rs.getBlob(ClientTableColumnsName.UNDO_LOG_ROLLBACK_INFO);
         byte[] rollbackInfo = BlobUtils.blob2Bytes(b);
         return rollbackInfo;
@@ -65,12 +88,14 @@ public class MySQLUndoLogManager extends AbstractUndoLogManager {
 
     @Override
     protected void insertUndoLogWithGlobalFinished(String xid, long branchId, UndoLogParser parser, Connection conn) throws SQLException {
+    	System.out.println("seata4");
         insertUndoLog(xid, branchId, buildContext(parser.getName()),
                 parser.getDefaultContent(), State.GlobalFinished, conn);
     }
 
     private void insertUndoLog(String xid, long branchId, String rollbackCtx,
                                byte[] undoLogContent, State state, Connection conn) throws SQLException {
+    	System.out.println("seata5");
         try (PreparedStatement pst = conn.prepareStatement(INSERT_UNDO_LOG_SQL)) {
             pst.setLong(1, branchId);
             pst.setString(2, xid);

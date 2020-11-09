@@ -3,8 +3,10 @@ spring:
       name: client-feign
    cloud:
       nacos:
-            discovery:
-               server-addr: 127.0.0.1:8848
+         discovery:
+            server-addr: 127.0.0.1:8848
+   zipkin:
+      base-url: http://127.0.0.1:9411 
 server:
    port: 80
 #eureka:
@@ -14,13 +16,13 @@ server:
 #   instance:
 feign:
    httpclient:
-      enable: false
-   okhttp:
       enable: true
+   okhttp:
+      enable: false
 ribbon:
 #更改负载策略，本地优先
    eureka:
-      enable: true
+      enable: false
    eager-load:
       enabled: true
       clients: service-provider,service-provider2

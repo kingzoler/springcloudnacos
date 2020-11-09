@@ -19,23 +19,24 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 @Configuration
 public class DataSourceConfiguration {
 
-    @Bean
-    @ConfigurationProperties(prefix = "spring.datasource")
-    public DataSource druidDataSource(){
-        DruidDataSource druidDataSource = new DruidDataSource();
-        return druidDataSource;
-    }
+	//seata1.4不需要
+//    @Bean
+//    @ConfigurationProperties(prefix = "spring.datasource")
+//    public DataSource druidDataSource(){
+//        DruidDataSource druidDataSource = new DruidDataSource();
+//        return druidDataSource;
+//    }
+//
+//    @Primary
+//    @Bean("dataSource")
+//    public DataSourceProxy dataSource(DataSource druidDataSource){
+//        return new DataSourceProxy(druidDataSource);
+//    }
 
-    @Primary
-    @Bean("dataSource")
-    public DataSourceProxy dataSource(DataSource druidDataSource){
-        return new DataSourceProxy(druidDataSource);
-    }
-
     @Bean
-    public SqlSessionFactory sqlSessionFactory(DataSourceProxy dataSourceProxy)throws Exception{
+    public SqlSessionFactory sqlSessionFactory(DataSource dataSource)throws Exception{
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
-        sqlSessionFactoryBean.setDataSource(dataSourceProxy);
+        sqlSessionFactoryBean.setDataSource(dataSource);
         sqlSessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver()
                 .getResources("classpath*:/mapper/*.xml"));
         sqlSessionFactoryBean.setTransactionFactory(new SpringManagedTransactionFactory());

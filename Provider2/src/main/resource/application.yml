@@ -10,6 +10,11 @@ spring:
       nacos:
          discovery:
             server-addr: 127.0.0.1:8848
+   zipkin:
+      base-url: http://127.0.0.1:9411
+   sleuth:
+      sampler:
+         percentage: 1.0
 server:
    port: 8011
 #eureka:
@@ -21,19 +26,17 @@ server:
 #      prefer-ip-address: true
 ribbon:
    eureka:
-      enable: true
+      enable: false
    ConnectTimeout: 5000
    ReadTimeout: 5000
 feign:
    httpclient:
-      enable: false
+      enable: true
    okhttp:
       enable: false
-   sentinel:
-      enable: true
 seata:
    enabled: true
-   application-id: service-provider2
+   application-id: ${spring.application.name}
    tx-service-group: test_tx_group
    enable-auto-data-source-proxy: true
    config:
